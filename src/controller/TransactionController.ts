@@ -1,5 +1,5 @@
-import { get_repository } from "../src/database";
-import { Transaction } from "../src/entity/Transactions";
+import { get_repository } from "../database";
+import { Transaction } from "../entity/Transactions";
 
 export class TransactionController {
   async save(transaction: Transaction) {

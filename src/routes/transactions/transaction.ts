@@ -1,8 +1,8 @@
 import e, { Router } from "express";
-import { UserController } from "../../../controller/UserController";
+import { UserController } from "../../controller/UserController";
 import { User, UserProps } from "../../entity/User";
 import { v4 as uuid } from "uuid";
-import { TransactionController } from "../../../controller/TransactionController";
+import { TransactionController } from "../../controller/TransactionController";
 import { Transaction } from "../../entity/Transactions";
 
 const transactions_router = Router();
@@ -26,8 +26,6 @@ transactions_router.post("/save", async (req, res) => {
     const service = new TransactionController();
 
     const answer = await service.save(transaction);
-
-    return res.status(200).send(transaction);
 
     return res.status(201).send(answer);
   } catch (e) {

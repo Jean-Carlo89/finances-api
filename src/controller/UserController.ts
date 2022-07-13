@@ -1,5 +1,5 @@
-import { get_repository } from "../src/database";
-import { User, UserProps } from "../src/entity/User";
+import { get_repository } from "../database";
+import { User, UserProps } from "../entity/User";
 const repository = get_repository();
 
 export class UserController {

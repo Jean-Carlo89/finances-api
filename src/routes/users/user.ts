@@ -1,5 +1,5 @@
 import e, { Router } from "express";
-import { UserController } from "../../../controller/UserController";
+import { UserController } from "../../controller/UserController";
 import { User, UserProps } from "../../entity/User";
 import { v4 as uuid } from "uuid";
 
