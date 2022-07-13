@@ -1,19 +1,14 @@
-// import { createConnection } from "net";
-// import { User } from "./entity/User";
-//import {} from "./entity/*.ts";
-// createConnection().then;
-
-import { DataSource } from "typeorm";
+import { DataSource, EntityTarget } from "typeorm";
 
 const AppDataSource = new DataSource({
-  name: "default",
+  name: "postgres_connection",
   type: "postgres",
   host: "localhost",
   port: 5431,
   username: "postgres",
   password: "postgres",
   database: "finances",
-  synchronize: true,
+  synchronize: process.env.NODE_ENV === "production" ? false : true,
   logging: true,
   entities: [`${__dirname}/**/entity/*.{ts,js}`],
   // entities: ["./entity/*.ts"],
@@ -31,7 +26,7 @@ export async function connect_to_db() {
   try {
     connection = await AppDataSource.initialize();
     console.log(connection.isInitialized);
-    console.log("Connected to DB postgres");
+    console.log(`Connected to DB postgres :${AppDataSource.options.database}`);
     return connection;
   } catch (e) {
     console.log("Error connecting to db");
@@ -42,6 +37,10 @@ export async function connect_to_db() {
 
 export function get_connection() {
   return connection;
+}
+
+export function get_repository() {
+  return AppDataSource.manager;
 }
 
 export async function close_connection() {

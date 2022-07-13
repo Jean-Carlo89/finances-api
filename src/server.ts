@@ -3,7 +3,8 @@ import { app } from "./app";
 import { close_connection, connect_to_db } from "./database";
 
 const PORT = 8002;
-app.listen(PORT, async () => {
+
+const server = app.listen(PORT, async () => {
   const connection = await connect_to_db();
 
   // console.log(connection);
@@ -13,7 +14,9 @@ app.listen(PORT, async () => {
       if (connection.isInitialized) {
         await close_connection();
       }
-      process.exit();
+
+      server.close();
+      console.log("Application shutting down...");
     } catch (e) {
       console.log("Error during shutdown");
       console.error(e.message);
