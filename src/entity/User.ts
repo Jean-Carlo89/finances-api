@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column, BaseEntity, OneToMany } from "typeorm";
+import { Transaction } from "./Transactions";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -26,6 +27,9 @@ export class User extends BaseEntity {
 
   @Column()
   email: string;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  transactions: Transaction[];
 
   static save_new(user: UserProps): User {
     return this.create({ ...user });

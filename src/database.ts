@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
   password: "postgres",
   database: "finances",
   synchronize: process.env.NODE_ENV === "production" ? false : true,
-  logging: true,
+  logging: process.env.NODE_ENV === "production" ? false : true,
   entities: [`${__dirname}/**/entity/*.{ts,js}`],
   // entities: ["./entity/*.ts"],
   //entities: ["./src/infra/typeorm/entities/*.ts"],

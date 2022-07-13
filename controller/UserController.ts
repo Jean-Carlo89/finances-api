@@ -9,4 +9,24 @@ export class UserController {
     // repository.findOne(User,{})
     return saved_user;
   }
+
+  async get_all(): Promise<User[]> {
+    const users = await repository.find(User);
+
+    return users;
+  }
+
+  async get_user(user_id: string): Promise<User> {
+    const users = await repository.findOneBy(User, { id: user_id });
+
+    return users;
+  }
+
+  async get_transactions(user_id: string) {
+    const user = await repository.findOne(User, { where: { id: user_id }, relations: ["transactions"] });
+
+    //  const transactions = await repository.findOneByOrFail(User, { id: user_id });
+
+    return user.transactions;
+  }
 }

@@ -39,4 +39,48 @@ user_router.post("/save", async (req, res) => {
     return res.status(500).send("Unknown error");
   }
 });
+
+user_router.get("/get/:user_id", async (req, res) => {
+  try {
+    const service = new UserController();
+
+    const answer = await service.get_user(req.params.user_id);
+
+    return res.status(201).send(answer);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("Unknown error");
+  }
+});
+
+user_router.get("/get_all", async (req, res) => {
+  try {
+    const service = new UserController();
+
+    const answer = await service.get_all();
+
+    return res.status(201).send(answer);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("Unknown error");
+  }
+});
+
+user_router.get("/get_transactions", async (req, res) => {
+  try {
+    const { user_id } = req.body;
+
+    if (!user_id) {
+      return res.status(400).send("User id not sent");
+    }
+    const service = new UserController();
+    console.log(user_id);
+    const answer = await service.get_transactions(user_id);
+
+    return res.status(201).send(answer);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("Unknown error");
+  }
+});
 export { user_router };
