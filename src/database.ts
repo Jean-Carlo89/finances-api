@@ -9,14 +9,19 @@ const AppDataSource = new DataSource({
   username: "postgres",
   password: "postgres",
   database: "finances",
-  synchronize: process.env.NODE_ENV === "production" ? false : true,
+  //migrationsRun: true,
+  // synchronize: process.env.NODE_ENV === "production" ? false : true,
+  synchronize: true,
   logging: process.env.NODE_ENV === "production" ? false : true,
   entities: [`${__dirname}/**/entity/*.{ts,js}`],
 
   //* for localhost
 
-  host: "localhost",
-  port: 5431,
+  host: process.env.HOST,
+  port: parseInt(process.env.POSTGRES_PORT),
+
+  // host: "localhost",
+  // port: 5431,
 });
 
 // name: "default",
@@ -27,10 +32,16 @@ const AppDataSource = new DataSource({
 
 let connection: DataSource;
 export async function connect_to_db() {
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.HOST);
+  console.log(process.env.PORT);
+  console.log(parseInt(process.env.PORT));
   try {
     // console.log(`Connecting to: ${AppDataSource.}`)
+
     connection = await AppDataSource.initialize();
     console.log(connection.isInitialized);
+    // await AppDataSource.runMigrations();
     console.log(`Connected to DB postgres :${AppDataSource.options.database}`);
     return connection;
   } catch (e) {

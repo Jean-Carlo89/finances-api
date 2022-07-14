@@ -1,8 +1,11 @@
+import "./setup";
 import "reflect-metadata";
 import { app } from "./app";
 import { close_connection, connect_to_db } from "./database";
 
-const PORT = 8002;
+//const PORT = 8002;
+
+const PORT = process.env.PORT;
 
 const server = app.listen(PORT, async () => {
   const connection = await connect_to_db();

@@ -1,6 +1,7 @@
 version: '3'
 services:
   db:
+    container_name: postgres_database
     image: "postgres:latest"
     environment:
         POSTGRES_PASSWORD: postgres
@@ -19,9 +20,19 @@ services:
     build: .
     ports:
       - "8002:8002"
-    
+    environment:
+        POSTGRES_PORT: 5432
+        HOST: db
+        PORT: 8002
   
 
 
     depends_on:
       - db
+      
+
+#       PORT: 8002
+
+# HOST: localhost
+
+# POSTGRES_PORT: 5431
